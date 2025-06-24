@@ -50,7 +50,7 @@ public class ContactOperations {
             }
         }
 
-        displayArea.setText(found ? result.toString() : "❌ No contact found with name: " + nameToSearch);
+        displayArea.setText(found ? result.toString() : " No contact found with name: " + nameToSearch);
     }
 
     public void editContact(String nameToEdit, ArrayList<contact> contacts,
@@ -118,7 +118,7 @@ public class ContactOperations {
             }
         }
 
-        displayArea.setText("❌ Contact not found: " + nameToDelete);
+        displayArea.setText(" Contact not found: " + nameToDelete);
     }
 
     public void displayAllContacts(ArrayList<contact> contacts, JTextArea displayArea) {
