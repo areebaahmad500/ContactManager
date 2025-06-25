@@ -1,4 +1,5 @@
 package ContactManager;
+
 import javax.swing.*;
 import java.util.ArrayList;
 import java.util.regex.*;
@@ -29,6 +30,8 @@ public class ContactOperations {
 
         contacts.add(new contact(name, phone, email));
         displayArea.setText(" Contact added successfully!");
+
+        replayPrompt(parent);
     }
 
     public void searchContact(String nameToSearch, ArrayList<contact> contacts,
@@ -50,7 +53,8 @@ public class ContactOperations {
             }
         }
 
-        displayArea.setText(found ? result.toString() : " No contact found with name: " + nameToSearch);
+        displayArea.setText(found ? result.toString() : "❌ No contact found with name: " + nameToSearch);
+        replayPrompt(parent);
     }
 
     public void editContact(String nameToEdit, ArrayList<contact> contacts,
@@ -88,11 +92,13 @@ public class ContactOperations {
                 c.setEmail(newEmail.trim());
 
                 displayArea.setText(" Contact updated:\n" + c.toString());
+                replayPrompt(parent);
                 return;
             }
         }
 
-        displayArea.setText("Contact not found: " + nameToEdit);
+        displayArea.setText(" Contact not found: " + nameToEdit);
+        replayPrompt(parent);
     }
 
     public void deleteContact(String nameToDelete, ArrayList<contact> contacts,
@@ -114,16 +120,20 @@ public class ContactOperations {
                     contacts.remove(i);
                     displayArea.setText(" Contact deleted.");
                 }
+
+                replayPrompt(parent);
                 return;
             }
         }
 
-        displayArea.setText(" Contact not found: " + nameToDelete);
+        displayArea.setText("Contact not found: " + nameToDelete);
+        replayPrompt(parent);
     }
 
-    public void displayAllContacts(ArrayList<contact> contacts, JTextArea displayArea) {
+    public void displayAllContacts(ArrayList<contact> contacts, JTextArea displayArea, JFrame parent) {
         if (contacts.isEmpty()) {
             displayArea.setText(" No contacts found.");
+            replayPrompt(parent);
             return;
         }
 
@@ -133,6 +143,7 @@ public class ContactOperations {
         }
 
         displayArea.setText(all.toString());
+        replayPrompt(parent);
     }
 
     private boolean isValidPhone(String phone) {
@@ -141,7 +152,7 @@ public class ContactOperations {
 
     private boolean isValidEmail(String email) {
         return email.contains("@") &&
-               Pattern.matches("^[A-Za-z0-9+_.-]+@(.+)$", email);
+               Pattern.matches("^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,6}$", email);
     }
 
     private void showError(String msg, JFrame parent) {
@@ -152,6 +163,14 @@ public class ContactOperations {
         String input = JOptionPane.showInputDialog(parent, msg, defaultVal);
         return input != null ? input.trim() : null;
     }
+
+    private void replayPrompt(JFrame parent) {
+        int choice = JOptionPane.showConfirmDialog(parent,
+                "Do you want to perform another action?",
+                "Continue?", JOptionPane.YES_NO_OPTION);
+
+        if (choice == JOptionPane.NO_OPTION) {
+            System.exit(0);
+        }
+    }
 }
-
-
