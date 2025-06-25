@@ -53,7 +53,7 @@ public class ContactOperations {
             }
         }
 
-        displayArea.setText(found ? result.toString() : "❌ No contact found with name: " + nameToSearch);
+        displayArea.setText(found ? result.toString() : " No contact found with name: " + nameToSearch);
         replayPrompt(parent);
     }
 
